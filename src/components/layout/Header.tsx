@@ -2,11 +2,14 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Heart, Calendar, Home } from "lucide-react";
+import { Menu, Heart, Calendar, Home, LogOut, User } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { AuthDialog } from "@/components/auth/AuthDialog";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { user, signOut, loading } = useAuth();
 
   const navItems = [
     { name: "Home", href: "/", icon: Home },
@@ -70,6 +73,33 @@ const Header = () => {
                 Donate
               </Link>
             </Button>
+            
+            {!loading && (
+              <>
+                {user ? (
+                  <div className="flex items-center space-x-2">
+                    <Button variant="ghost" size="sm">
+                      <User className="w-4 h-4 mr-1" />
+                      {user.email}
+                    </Button>
+                    <Button
+                      onClick={signOut}
+                      variant="outline"
+                      size="sm"
+                    >
+                      <LogOut className="w-4 h-4 mr-1" />
+                      Sign Out
+                    </Button>
+                  </div>
+                ) : (
+                  <AuthDialog>
+                    <Button size="sm" variant="outline">
+                      Sign In
+                    </Button>
+                  </AuthDialog>
+                )}
+              </>
+            )}
           </div>
 
           {/* Mobile Menu */}
@@ -108,6 +138,36 @@ const Header = () => {
                       Donate
                     </Link>
                   </Button>
+                  
+                  {!loading && (
+                    <>
+                      {user ? (
+                        <div className="space-y-2">
+                          <Button variant="ghost" className="w-full justify-start">
+                            <User className="w-4 h-4 mr-2" />
+                            {user.email}
+                          </Button>
+                          <Button
+                            onClick={() => {
+                              signOut();
+                              setIsOpen(false);
+                            }}
+                            variant="outline"
+                            className="w-full"
+                          >
+                            <LogOut className="w-4 h-4 mr-2" />
+                            Sign Out
+                          </Button>
+                        </div>
+                      ) : (
+                        <AuthDialog>
+                          <Button variant="outline" className="w-full">
+                            Sign In
+                          </Button>
+                        </AuthDialog>
+                      )}
+                    </>
+                  )}
                 </div>
               </nav>
             </SheetContent>

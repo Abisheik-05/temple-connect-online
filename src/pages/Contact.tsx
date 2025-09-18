@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import MapboxMap from "@/components/MapboxMap";
 import { 
   MapPin,
   Phone,
@@ -311,24 +312,13 @@ const Contact = () => {
                     Temple Location
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="aspect-video bg-muted rounded-lg mb-4 overflow-hidden">
-                    <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3846.7756469618!2d78.86532!3d16.075556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb04a1b7d48e4d%3A0x8b995a5c5a5c5a5c!2sSrisailam%20Temple!5e0!3m2!1sen!2sin!4v1234567890"
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0 }}
-                      allowFullScreen
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      title="Temple Location Map"
-                    ></iframe>
-                  </div>
-                  <Button variant="outline" className="w-full">
-                    <Navigation className="w-4 h-4 mr-2" />
-                    Get Directions
-                  </Button>
-                </CardContent>
+                 <CardContent>
+                   <MapboxMap className="mb-4" />
+                   <Button variant="outline" className="w-full">
+                     <Navigation className="w-4 h-4 mr-2" />
+                     Get Directions
+                   </Button>
+                 </CardContent>
               </Card>
 
               <Card className="card-divine">

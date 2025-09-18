@@ -12,10 +12,14 @@ import {
   Users,
   Gift,
   Camera,
+  LogIn,
 } from "lucide-react";
 import templeHero from "@/assets/temple-hero.jpg";
+import { useAuth } from "@/hooks/useAuth";
+import { AuthDialog } from "@/components/auth/AuthDialog";
 
 const Home = () => {
+  const { user } = useAuth();
   const quickServices = [
     {
       title: "Book Darshan",
@@ -132,6 +136,19 @@ const Home = () => {
                 Learn More
               </Link>
             </Button>
+            
+            {!user && (
+              <AuthDialog>
+                <Button
+                  size="lg"
+                  variant="secondary"
+                  className="text-lg px-8 py-6 bg-white text-primary hover:bg-white/90"
+                >
+                  <LogIn className="w-5 h-5 mr-2" />
+                  Sign In / Join Temple
+                </Button>
+              </AuthDialog>
+            )}
           </div>
         </div>
       </section>
