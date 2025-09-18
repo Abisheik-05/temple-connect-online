@@ -12,6 +12,10 @@ export default {
         "2xl": "1400px",
       },
     },
+    fontFamily: {
+      sans: ['Inter', 'system-ui', 'sans-serif'],
+      serif: ['Playfair Display', 'Georgia', 'serif'],
+    },
     extend: {
       colors: {
         border: "hsl(var(--border))",
@@ -22,6 +26,7 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          glow: "hsl(var(--primary-glow))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -57,6 +62,20 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      backgroundImage: {
+        'gradient-divine': 'var(--gradient-divine)',
+        'gradient-temple': 'var(--gradient-temple)',
+        'gradient-peaceful': 'var(--gradient-peaceful)',
+      },
+      boxShadow: {
+        'divine': 'var(--shadow-divine)',
+        'temple': 'var(--shadow-temple)',
+        'peaceful': 'var(--shadow-peaceful)',
+      },
+      transitionTimingFunction: {
+        'divine': 'var(--transition-divine)',
+        'gentle': 'var(--transition-gentle)',
       },
       borderRadius: {
         lg: "var(--radius)",
