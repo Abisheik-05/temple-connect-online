@@ -13,10 +13,12 @@ import {
   Gift,
   Camera,
   LogIn,
+  Bell,
 } from "lucide-react";
 import templeHero from "@/assets/temple-hero.jpg";
 import { useAuth } from "@/hooks/useAuth";
 import { AuthDialog } from "@/components/auth/AuthDialog";
+import { AnnouncementsList } from "@/components/announcements/AnnouncementsList";
 
 const Home = () => {
   const { user } = useAuth();
@@ -149,6 +151,24 @@ const Home = () => {
                 </Button>
               </AuthDialog>
             )}
+          </div>
+        </div>
+      </section>
+
+      {/* Announcements Section */}
+      <section className="section-padding bg-gradient-to-b from-orange-50 to-white">
+        <div className="container mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-serif font-bold mb-4">
+              <Bell className="inline-block w-8 h-8 mr-3 text-orange-600" />
+              Temple Announcements
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Stay updated with the latest temple news and important information
+            </p>
+          </div>
+          <div className="max-w-4xl mx-auto">
+            <AnnouncementsList />
           </div>
         </div>
       </section>

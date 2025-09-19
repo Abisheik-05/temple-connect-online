@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
 import { Loader2, LogIn, UserPlus } from "lucide-react";
 
 interface AuthDialogProps {
@@ -22,6 +23,7 @@ export const AuthDialog = ({ children }: AuthDialogProps) => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { signIn, signUp } = useAuth();
+  const { toast } = useToast();
 
   const [signInData, setSignInData] = useState({
     email: "",
@@ -39,11 +41,25 @@ export const AuthDialog = ({ children }: AuthDialogProps) => {
     e.preventDefault();
     setIsLoading(true);
 
-    const { error } = await signIn(signInData.email, signInData.password);
-    
-    if (!error) {
-      setOpen(false);
-      setSignInData({ email: "", password: "" });
+    try {
+      const { error } = await signIn(signInData.email, signInData.password);
+      
+      if (error) {
+        toast({
+          title: "Sign In Failed",
+          description: error,
+          variant: "destructive",
+        });
+      } else {
+        setOpen(false);
+        setSignInData({ email: "", password: "" });
+      }
+    } catch (err) {
+      toast({
+        title: "Sign In Error",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive",
+      });
     }
     
     setIsLoading(false);
@@ -53,16 +69,44 @@ export const AuthDialog = ({ children }: AuthDialogProps) => {
     e.preventDefault();
     
     if (signUpData.password !== signUpData.confirmPassword) {
+      toast({
+        title: "Password Mismatch",
+        description: "Passwords do not match. Please check and try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (signUpData.password.length < 6) {
+      toast({
+        title: "Password Too Short",
+        description: "Password must be at least 6 characters long.",
+        variant: "destructive",
+      });
       return;
     }
 
     setIsLoading(true);
 
-    const { error } = await signUp(signUpData.email, signUpData.password, signUpData.fullName);
-    
-    if (!error) {
-      setOpen(false);
-      setSignUpData({ fullName: "", email: "", password: "", confirmPassword: "" });
+    try {
+      const { error } = await signUp(signUpData.email, signUpData.password, signUpData.fullName);
+      
+      if (error) {
+        toast({
+          title: "Sign Up Failed",
+          description: error,
+          variant: "destructive",
+        });
+      } else {
+        setOpen(false);
+        setSignUpData({ fullName: "", email: "", password: "", confirmPassword: "" });
+      }
+    } catch (err) {
+      toast({
+        title: "Sign Up Error",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive",
+      });
     }
     
     setIsLoading(false);

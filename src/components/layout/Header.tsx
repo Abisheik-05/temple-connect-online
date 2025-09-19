@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Heart, Calendar, Home, LogOut, User } from "lucide-react";
+import { Menu, Heart, Calendar, Home, LogOut, User, LayoutDashboard } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { AuthDialog } from "@/components/auth/AuthDialog";
 
@@ -21,6 +21,8 @@ const Header = () => {
     { name: "Gallery", href: "/gallery" },
     { name: "Contact", href: "/contact" },
   ];
+
+  const dashboardNavItem = { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard };
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -55,6 +57,18 @@ const Header = () => {
                 {item.name}
               </Link>
             ))}
+            {user && (
+              <Link
+                to={dashboardNavItem.href}
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors hover:bg-muted hover:text-foreground ${
+                  isActive(dashboardNavItem.href)
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground"
+                }`}
+              >
+                {dashboardNavItem.name}
+              </Link>
+            )}
           </nav>
 
           {/* CTA Buttons */}
@@ -126,6 +140,20 @@ const Header = () => {
                     {item.name}
                   </Link>
                 ))}
+                {user && (
+                  <Link
+                    to={dashboardNavItem.href}
+                    onClick={() => setIsOpen(false)}
+                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors hover:bg-muted hover:text-foreground ${
+                      isActive(dashboardNavItem.href)
+                        ? "bg-primary text-primary-foreground"
+                        : "text-muted-foreground"
+                    }`}
+                  >
+                    <LayoutDashboard className="w-4 h-4 mr-2 inline" />
+                    {dashboardNavItem.name}
+                  </Link>
+                )}
                 <div className="pt-4 space-y-2">
                   <Button asChild variant="outline" className="w-full">
                     <Link to="/services" onClick={() => setIsOpen(false)}>
